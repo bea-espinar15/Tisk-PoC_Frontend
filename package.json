@@ -1,0 +1,24 @@
+{
+  "name": "tisk_poc_frontend",
+  "version": "1.0.0",
+  "description": "PoC of Tisk frontend (+ orchestrator) app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app/app.js"
+  },
+  "keywords": [
+    "Tisk",
+    "PoC",
+    "JS",
+    "Node.js",
+    "Frontend",
+    "Auth",
+    "Orchestrator"
+  ],
+  "author": "Beatriz Espinar Aragón",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
