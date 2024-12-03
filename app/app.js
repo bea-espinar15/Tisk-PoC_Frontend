@@ -50,10 +50,9 @@ app.use(sessionMiddleware);
 const pool = mySql.createPool(dbConfig);
 
 
-// TODO-REMOVE
 app.get("/", (req, res) => {
-    res.send("Hello world");
-})
+    res.sendFile(path.join(__dirname, 'public', 'html', 'index.html'));
+});
 
 
 // ----- Init server -----

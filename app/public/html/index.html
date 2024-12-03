@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoC Tisk</title>
+    <link rel="icon" href="/img/icon_no_bg.png">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <!-- ------ Nav bar ------ -->
+    <div id="div-nav" class="nav-bar">
+        <img src="/img/logo_white.png" alt="Tisk logo" width="80">
+        <div class="nav-bar">
+            <p class="white">test_user123</p>
+            <img src="/img/icons/logout.png" alt="Logout" width="30">
+        </div>
+    </div>
+
+    <!-- ------ Content ------ -->
+    <div id="div-content">
+        <!-- Tasks -->
+        <div class="div-column">
+            <div class="top-div">
+                <h1 class="top-h1">New task</h1>
+                <form method="POST" action="/tasks">
+                    <label for="input-title">Title</label>
+                    <input id="input-title" type="text" placeholder="Type here...">
+                    <button type="submit" class="button-submit">Add</button>
+                </form>
+            </div>
+            <hr>
+            <h1>My tasks</h1>
+            <div id="div-tasks">
+                <p>Do the groceries</p>
+                <p>Basketball game</p>
+                <p>Dentist appointment</p>
+                <p>Pick up kids from school</p>
+                <p>Weekly team meeting</p>
+                <p>Call mom</p>
+                <p>Finish project report</p>
+                <p>Yoga class</p>
+                <p>Pay electricity bill</p>
+                <p>Walk the dog</p>
+                <p>Movie night with friends</p>
+                <p>Buy birthday gift</p>
+                <p>Car service appointment</p>
+                <p>Prepare dinner</p>
+                <p>Check emails</p>
+                <p>Plan weekend trip</p>
+                <p>Doctor's appointment</p>
+                <p>Read a book</p>
+                <p>Clean the house</p>
+                <p>Visit grandparents</p>
+            </div>
+        </div>
+        <hr class="hr-separator">
+        <!-- Files -->
+        <div id="div-middle" class="div-column">
+            <div class="top-div">
+                <h1 class="top-h1">New file</h1>
+                <form method="POST" action="/tasks">
+                    <label for="input-file">File</label>
+                    <input id="input-file" type="file">
+                    <button type="submit" class="button-submit">Upload</button>
+                </form>
+            </div>
+            <hr>
+            <h1>My files</h1>
+            <div id="div-files">
+                <div class="nav-bar">
+                    <img src="/img/icons/pdf-file.png" alt="PDF icon" width="20">
+                    <a href="#">File_1.pdf</a>
+                </div>
+                <div class="nav-bar">
+                    <img src="/img/icons/pdf-file.png" alt="PDF icon" width="20">
+                    <a href="#">File_2.pdf</a>
+                </div>
+                <div class="nav-bar">
+                    <img src="/img/icons/pdf-file.png" alt="PDF icon" width="20">
+                    <a href="#">File_3.pdf</a>
+                </div>
+            </div>
+        </div>
+        <hr class="hr-separator">
+        <!-- Notifications -->
+        <div class="div-column">
+            <div class="top-div">
+                <h1 class="top-h1">Notifications</h1>
+                <button type="button">Allow notifications</button>
+                <p id="p-notifs"><small>Notifications are disabled in all devices.</small></p>
+            </div>
+            <hr>
+            <button id="button-notif" type="button" class="secondary-button">Send me a notification!</button>
+        </div>
+    </div>
+</body>
+
+</html>
