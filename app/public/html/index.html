@@ -11,27 +11,46 @@
 
 <body>
     <!-- ------ Nav bar ------ -->
-    <div id="div-nav" class="nav-bar">
+    <div id="div-nav" class="row-space-between">
         <img src="/img/logo_white.png" alt="Tisk logo" width="80">
-        <div class="nav-bar">
+        <!-- Hamburger button -->
+        <button id="button-hamburger" aria-label="menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+        <!-- Hamburger menu -->
+        <div id="div-hamburger" class="row-space-between">
+            <div class="div-menu">
+                <img src="/img/language/en.png" alt="USA flag" width="15">
+                <p class="white">EN</p>
+            </div>
             <p class="white">test_user123</p>
-            <img src="/img/icons/logout.png" alt="Logout" width="30">
+            <div class="div-menu">
+                <p id="p-logout" class="white">Log out</p>
+                <img src="/img/icons/logout.png" alt="Logout" width="30">                
+            </div>            
         </div>
     </div>
 
     <!-- ------ Content ------ -->
     <div id="div-content">
-        <!-- Tasks -->
+        <!-- --- Tasks --- -->
         <div class="div-column">
-            <div class="top-div">
-                <h1 class="top-h1">New task</h1>
+            <!-- Form new task -->
+            <div class="div-form">
+                <h1 class="h1-form">New task</h1>
                 <form method="POST" action="/tasks">
                     <label for="input-title">Title</label>
-                    <input id="input-title" type="text" placeholder="Type here...">
+                    <input id="input-title" name="input-title" type="text" placeholder="Type here...">
+                    <% if (result != null && !showModal) { %>
+                    <span class="span-error"><%= result.message %></span>
+                    <% } %>
                     <button type="submit" class="button-submit">Add</button>
                 </form>
             </div>
             <hr>
+            <!-- Task list -->
             <h1>My tasks</h1>
             <div id="div-tasks">
                 <p>Do the groceries</p>
@@ -53,14 +72,15 @@
                 <p>Doctor's appointment</p>
                 <p>Read a book</p>
                 <p>Clean the house</p>
-                <p>Visit grandparents</p>
+                <p>Visit grandparents</p> 
             </div>
         </div>
         <hr class="hr-separator">
-        <!-- Files -->
+        <!-- --- Files --- -->
         <div id="div-middle" class="div-column">
-            <div class="top-div">
-                <h1 class="top-h1">New file</h1>
+            <!-- Form new file -->
+            <div class="div-form">
+                <h1 class="h1-form">New file</h1>
                 <form method="POST" action="/tasks">
                     <label for="input-file">File</label>
                     <input id="input-file" type="file">
@@ -68,34 +88,39 @@
                 </form>
             </div>
             <hr>
+            <!-- File list -->
             <h1>My files</h1>
             <div id="div-files">
-                <div class="nav-bar">
+                <div>
                     <img src="/img/icons/pdf-file.png" alt="PDF icon" width="20">
                     <a href="#">File_1.pdf</a>
                 </div>
-                <div class="nav-bar">
+                <div>
                     <img src="/img/icons/pdf-file.png" alt="PDF icon" width="20">
                     <a href="#">File_2.pdf</a>
                 </div>
-                <div class="nav-bar">
+                <div>
                     <img src="/img/icons/pdf-file.png" alt="PDF icon" width="20">
                     <a href="#">File_3.pdf</a>
                 </div>
             </div>
         </div>
         <hr class="hr-separator">
-        <!-- Notifications -->
+        <!-- --- Notifications --- -->
         <div class="div-column">
-            <div class="top-div">
-                <h1 class="top-h1">Notifications</h1>
+            <!-- Allow notifications -->
+            <div class="div-form">
+                <h1 class="h1-form">Notifications</h1>
                 <button type="button">Allow notifications</button>
-                <p id="p-notifs"><small>Notifications are disabled in all devices.</small></p>
+                <p id="p-notif"><small>Notifications are disabled in all devices.</small></p>
             </div>
             <hr>
+            <!-- Send notification -->
             <button id="button-notif" type="button" class="secondary-button">Send me a notification!</button>
         </div>
     </div>
+
+    <script src="/js/main.js"></script>
 </body>
 
 </html>
