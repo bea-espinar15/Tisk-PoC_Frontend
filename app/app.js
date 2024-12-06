@@ -14,7 +14,8 @@ const mySqlSession = require("express-mysql-session");
 // 3. FILE
 const constants = require("./config/constants");
 const dbConfig = require("./config/dbConfig");
-const logger = require("./config/logger")
+const logger = require("./config/logger");
+const tasksRouter = require("./routes/tasksRouter");
 
 // ----- Configure app -----
 const app = express();
@@ -50,8 +51,13 @@ app.use(sessionMiddleware);
 const pool = mySql.createPool(dbConfig);
 
 
+// ----- Routers -----
+app.use("/tasks", tasksRouter);
+
+
+// ----- Other requests -----
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'html', 'index.html'));
+    res.render("index", {showModal: false, result: null});
 });
 
 
