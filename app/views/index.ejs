@@ -2,11 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PoC Tisk</title>
-    <link rel="icon" href="/img/icon_no_bg.png">
-    <link rel="stylesheet" href="/css/styles.css">
+    <%- include("head.ejs") %>
     <link rel="stylesheet" href="/css/modal.css">
 </head>
 
@@ -15,7 +11,7 @@
     <% if (showModal) { %>
     <%- include("response-modal.ejs") %>
     <% } %>
-
+    
     <!-- ------ Nav bar ------ -->
     <%- include("nav.ejs") %>
 
@@ -91,7 +87,7 @@
             <button id="button-notif" type="button" class="secondary-button">Send me a notification!</button>
         </div>
     </div>
-
+    
     <script src="/js/main.js"></script>
     <script src="/js/modal.js"></script>
 </body>

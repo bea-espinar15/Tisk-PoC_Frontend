@@ -1,0 +1,76 @@
+body {
+    background: url('/img/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    backdrop-filter: blur(8px);
+}
+
+.div-auth {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 5rem 4rem 5rem 4rem;
+    width: 20%;
+    border-radius: 10px;
+    background-color: var(--neutral-50);
+    box-shadow: 6px 8px 16px var(--neutral-800);
+}
+
+.div-container-auth {
+    padding-top: 10rem;
+}
+
+.div-auth input {
+    margin-bottom: 1rem;
+    background-color: var(--neutral-50);
+}
+
+.div-auth h1 {
+    text-align: center;
+    margin-top: 0;
+    font-size: 2rem;
+}
+
+.div-auth button {
+    align-self: center;
+    margin-top: 2rem;
+}
+
+.div-auth p {
+    text-align: center;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}
+
+.div-auth a {
+    color: var(--primary-700);
+}
+
+
+/* --- RESPONSIVENESS --- */
+@media (max-width: 1044px) {
+    body {
+        background: none;
+        background-color: var(--neutral-50);
+        backdrop-filter: none;
+    }
+
+    .div-auth {
+        margin: 0;
+        width: auto;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .div-container-auth {
+        padding-top: 8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .div-container-auth {
+        padding-top: 1rem;
+    }
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("head.ejs") %>
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+
+<body>
+    <div class="div-container-auth">
+        <div class="div-auth">
+            <h1>Create account</h1>
+            <form method="post" action="/signup">
+                <label for="input-username">Username</label>
+                <input id="input-username" name="input-username" type="text" placeholder="example123">
+                <label for="input-email">Email</label>
+                <input id="input-email" name="input-email" type="text" placeholder="example@gmail.com">
+                <label for="input-pass">Password</label>
+                <input id="input-pass" name="input-pass" type="password" placeholder="Create a strong password">
+                <button type="submit">Sign Up</button>
+            </form>
+            <p>Already have an account? <a href="/login">Login</a></p>
+        </div>
+    </div>    
+</body>
+
+</html>

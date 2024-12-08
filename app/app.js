@@ -16,6 +16,7 @@ const constants = require("./config/constants");
 const dbConfig = require("./config/dbConfig");
 const logger = require("./config/logger");
 const tasksRouter = require("./routes/tasksRouter");
+const authRouter = require("./routes/authRouter");
 const Result = require("./utils/result");
 const ERROR_RESPONSE = require("./utils/responseEnum").ERROR_RESPONSE;
 
@@ -55,13 +56,8 @@ const pool = mySql.createPool(dbConfig);
 
 
 // ----- Routers -----
+app.use("/", authRouter);
 app.use("/tasks", tasksRouter);
-
-
-// ----- Other requests -----
-app.get("/", (req, res, next) => {
-    res.redirect("/tasks");
-});
 
 
 // ----- 404 Handler -----

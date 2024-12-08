@@ -2,9 +2,6 @@
 
 // ----- Import modules -----
 const express = require("express");
-const axios = require('axios');
-const constants = require("../config/constants");
-const logger = require("../config/logger");
 const callHandler = require("../utils/callHandler");
 
 
@@ -13,6 +10,20 @@ const router = express.Router();
 
 
 // ----- Endpoints -----
+// -- GET --
+router.get("/", async (req, res, next) => {
+    // Call API
+    const result = await callHandler.handleGetCall("/tasks", null);
+    // Handle response
+    res.status(result.code);
+    if (result.code == 404 || result.code == 500)
+        res.render("error-page", {result: result});
+    else {
+        res.render("index", {showModal: false, result: null, tasks: result.data});
+    }
+});
+
+
 // -- POST --
 router.post("/", async (req, res, next) => {
     // Build body for request
@@ -33,18 +44,5 @@ router.post("/", async (req, res, next) => {
     }
 });
 
-
-// -- GET --
-router.get("/", async (req, res, next) => {
-    // Call API
-    const result = await callHandler.handleGetCall("/tasks", null);
-    // Handle response
-    res.status(result.code);
-    if (result.code == 404 || result.code == 500)
-        res.render("error-page", {result: result});
-    else {
-        res.render("index", {showModal: false, result: null, tasks: result.data});
-    }
-});
 
 module.exports = router;

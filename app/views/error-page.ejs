@@ -2,11 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PoC Tisk</title>
-    <link rel="icon" href="/img/icon_no_bg.png">
-    <link rel="stylesheet" href="/css/styles.css">
+    <%- include("head.ejs") %>
     <link rel="stylesheet" href="/css/error.css">
 </head>
 
@@ -19,6 +15,8 @@
         <h2><%= result.title %></h2>
         <p><%= result.message %></p>
     </div>
+
+    <script src="/js/main.js"></script>
 </body>
 
 </html>
