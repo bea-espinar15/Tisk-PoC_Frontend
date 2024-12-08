@@ -1,20 +1,24 @@
 "use strict"
 
-const SUCCESS_RESPONSE = Object.freeze({
+const SUCCESS_RESPONSE = Object.freeze({    
     TASK_CREATED: {
-        title: "Tarea creada correctamente",
-        message: "La tarea se ha creado con éxito. Ya puedes revisarla en tu lista de tareas!"
+        title: "Task created successfully",
+        message: "The task was created successfully. You can check it out in your task list!"
     }
 });
 
 const ERROR_RESPONSE = Object.freeze({
-    TITLE_IS_REQUIRED: {
-        title: "Datos incorrectos",
-        message: "Este campo es obligatorio."
+    NOT_FOUND: {
+        title: "Oops! Page not found",
+        message: "Unfortunately, the page you are trying to access does not exist"
     },
     SERVER_ERROR: {
-        title: "Error desconocido :(",
-        message: "Se ha producido un error inesperado, vuelve a intentarlo en unos instantes."
+        title: "Unknown error :(",
+        message: "An unexpected error ocurred, try again in a few moments."
+    },
+    TITLE_REQUIRED: {
+        title: "Invalid data",
+        message: "You need to complete this field."
     }
 });
 

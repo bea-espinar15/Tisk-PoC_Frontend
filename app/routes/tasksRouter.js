@@ -14,7 +14,7 @@ const router = express.Router();
 
 // ----- Endpoints -----
 // -- POST --
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
     // Build body for request
     const body = {
         title: req.body["input-title"]
