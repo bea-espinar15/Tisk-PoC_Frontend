@@ -123,6 +123,12 @@ small {
     margin: 1rem 0;
 }
 
+.p-no-results {
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+}
+
 .secondary-button {
     border: 0.1rem solid var(--primary-600);
     color: var(--primary-600);

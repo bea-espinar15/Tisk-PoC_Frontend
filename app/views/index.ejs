@@ -17,27 +17,7 @@
     <% } %>
 
     <!-- ------ Nav bar ------ -->
-    <div id="div-nav" class="row-space-between">
-        <img src="/img/logo_white.png" alt="Tisk logo" width="80">
-        <!-- Hamburger button -->
-        <button id="button-hamburger" aria-label="menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
-        <!-- Hamburger menu -->
-        <div id="div-hamburger" class="row-space-between">
-            <div class="div-menu">
-                <img src="/img/language/en.png" alt="USA flag" width="15">
-                <p class="white">EN</p>
-            </div>
-            <p class="white">test_user123</p>
-            <div class="div-menu">
-                <p id="p-logout" class="white">Log out</p>
-                <img src="/img/icons/logout.png" alt="Logout" width="30">                
-            </div>            
-        </div>
-    </div>
+    <%- include("nav.ejs") %>
 
     <!-- ------ Content ------ -->
     <div id="div-content">
@@ -59,26 +39,12 @@
             <!-- Task list -->
             <h1>My tasks</h1>
             <div id="div-tasks">
-                <p>Do the groceries</p>
-                <p>Basketball game</p>
-                <p>Dentist appointment</p>
-                <p>Pick up kids from school</p>
-                <p>Weekly team meeting</p>
-                <p>Call mom</p>
-                <p>Finish project report</p>
-                <p>Yoga class</p>
-                <p>Pay electricity bill</p>
-                <p>Walk the dog</p>
-                <p>Movie night with friends</p>
-                <p>Buy birthday gift</p>
-                <p>Car service appointment</p>
-                <p>Prepare dinner</p>
-                <p>Check emails</p>
-                <p>Plan weekend trip</p>
-                <p>Doctor's appointment</p>
-                <p>Read a book</p>
-                <p>Clean the house</p>
-                <p>Visit grandparents</p> 
+                <% if (tasks.length == 0) { %>
+                    <p class="p-no-results">You don't have any tasks yet :&#40;</p>
+                <% } else {
+                    tasks.forEach((task) => { %>
+                        <p><%= task.title %></p>
+                <% });} %>
             </div>
         </div>
         <hr class="hr-separator">

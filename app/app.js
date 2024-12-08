@@ -16,6 +16,9 @@ const constants = require("./config/constants");
 const dbConfig = require("./config/dbConfig");
 const logger = require("./config/logger");
 const tasksRouter = require("./routes/tasksRouter");
+const Result = require("./utils/result");
+const ERROR_RESPONSE = require("./utils/responseEnum").ERROR_RESPONSE;
+
 
 // ----- Configure app -----
 const app = express();
@@ -56,8 +59,15 @@ app.use("/tasks", tasksRouter);
 
 
 // ----- Other requests -----
-app.get("/", (req, res) => {
-    res.render("index", {showModal: false, result: null});
+app.get("/", (req, res, next) => {
+    res.redirect("/tasks");
+});
+
+
+// ----- 404 Handler -----
+app.use((req, res, next) => {
+    res.status(404);
+    res.render("error-page", {result: new Result(false, 404, ERROR_RESPONSE["NOT_FOUND"], null)});
 });
 
 

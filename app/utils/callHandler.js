@@ -23,8 +23,31 @@ async function handlePostCall(url, body) {
     }
     catch (error) {
         // Handle error
-        if (error.response)
-            return new Result(false, error.response.status, ERROR_RESPONSE[error.response.data.code], null);
+        if (error.response) 
+            return new Result(false, error.response.status, ERROR_RESPONSE[error.response.data.code], null); 
+        else {
+            logger.error(`[GENERAL] - Error at sending request to API Services`);
+            return new Result(false, 500, ERROR_RESPONSE.SERVER_ERROR, null);
+        }        
+    }
+}
+
+async function handleGetCall(url, queryParams = {}) {
+    try {
+        const response = await axios.get(`${constants.CONFIG["API_SERVICES_URL"]}/${url}`, {
+            params: queryParams, 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        // Handle response
+        return new Result(true, response.status, null, response.data.content);
+    }
+    catch (error) {
+        // Handle error
+        if (error.response) 
+            return new Result(false, error.response.status, ERROR_RESPONSE[error.response.data.code], null); 
         else {
             logger.error(`[GENERAL] - Error at sending request to API Services`);
             return new Result(false, 500, ERROR_RESPONSE.SERVER_ERROR, null);
@@ -33,5 +56,6 @@ async function handlePostCall(url, body) {
 }
 
 module.exports =  {
-    handlePostCall: handlePostCall
+    handlePostCall: handlePostCall,
+    handleGetCall: handleGetCall
 };
