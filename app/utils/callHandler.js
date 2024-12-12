@@ -5,8 +5,7 @@ const axios = require('axios');
 const constants = require("../config/constants");
 const logger = require("../config/logger");
 const Result = require("./result");
-const SUCCESS_RESPONSE = require("./responseEnum").SUCCESS_RESPONSE;
-const ERROR_RESPONSE = require("./responseEnum").ERROR_RESPONSE;
+const { SUCCESS_RESPONSE, ERROR_RESPONSE } = require("./responseEnum");
 
 
 // ----- Handle call -----
@@ -23,10 +22,15 @@ async function handlePostCall(url, body) {
     }
     catch (error) {
         // Handle error
-        if (error.response) 
-            return new Result(false, error.response.status, ERROR_RESPONSE[error.response.data.code], null); 
+        if (error.response)
+            if (error.response.data.code in ERROR_RESPONSE)
+                return new Result(false, error.response.status, ERROR_RESPONSE[error.response.data.code], error.response.data.content);
+            else {
+                logger.error(`[GENERAL] - API Services returned an unexpected error code: ${error.response.data.code}`);
+                return new Result(false, 500, ERROR_RESPONSE.SERVER_ERROR, null);
+            }
         else {
-            logger.error(`[GENERAL] - Error at sending request to API Services`);
+            logger.error("[GENERAL] - Error at sending request to API Services");
             return new Result(false, 500, ERROR_RESPONSE.SERVER_ERROR, null);
         }        
     }
@@ -47,7 +51,12 @@ async function handleGetCall(url, queryParams = {}) {
     catch (error) {
         // Handle error
         if (error.response) 
-            return new Result(false, error.response.status, ERROR_RESPONSE[error.response.data.code], null); 
+            if (error.response.data.code in ERROR_RESPONSE)
+                return new Result(false, error.response.status, ERROR_RESPONSE[error.response.data.code], error.response.data.content);
+            else {
+                logger.error(`[GENERAL] - API Services returned an unexpected error code: ${error.response.data.code}`);
+                return new Result(false, 500, ERROR_RESPONSE.SERVER_ERROR, null);
+            }
         else {
             logger.error(`[GENERAL] - Error at sending request to API Services`);
             return new Result(false, 500, ERROR_RESPONSE.SERVER_ERROR, null);
@@ -56,6 +65,6 @@ async function handleGetCall(url, queryParams = {}) {
 }
 
 module.exports =  {
-    handlePostCall: handlePostCall,
-    handleGetCall: handleGetCall
+    handlePostCall,
+    handleGetCall
 };

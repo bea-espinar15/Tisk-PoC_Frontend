@@ -18,7 +18,7 @@ const logger = require("./config/logger");
 const tasksRouter = require("./routes/tasksRouter");
 const authRouter = require("./routes/authRouter");
 const Result = require("./utils/result");
-const ERROR_RESPONSE = require("./utils/responseEnum").ERROR_RESPONSE;
+const { ERROR_RESPONSE } = require("./utils/responseEnum");
 
 
 // ----- Configure app -----
@@ -50,9 +50,6 @@ const sessionMiddleware = session({
     rolling: true
 });
 app.use(sessionMiddleware);
-
-// -- DB config --
-const pool = mySql.createPool(dbConfig);
 
 
 // ----- Routers -----

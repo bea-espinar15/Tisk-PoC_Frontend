@@ -16,11 +16,19 @@ const DB_CONFIG = {
     TTL: 7 * 24 * 60 * 60 * 1000
 }
 
+// ----- Others -----
+const REGEX = {
+    USERNAME_REGEX: /^[a-z0-9_]{5,20}$/,
+    EMAIL_REGEX: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+    PASSWORD_REGEX: /^(?=.*[a-zA-Z])(?=.*\d).{12,}$/
+}
+
 
 // ----- Export -----
 module.exports = {
-    APP_ENV: APP_ENV,
-    CONFIG: CONFIG,
-    SECRETS: SECRETS,
-    DB_CONFIG: DB_CONFIG
+    APP_ENV, 
+    CONFIG,
+    SECRETS,
+    DB_CONFIG,
+    REGEX
 }

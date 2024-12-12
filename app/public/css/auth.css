@@ -21,8 +21,11 @@ body {
     padding-top: 10rem;
 }
 
+.div-auth label {
+    margin-top: 1rem;
+}
+
 .div-auth input {
-    margin-bottom: 1rem;
     background-color: var(--neutral-50);
 }
 
@@ -50,6 +53,12 @@ body {
 
 
 /* --- RESPONSIVENESS --- */
+@media (max-width: 1600px) {
+    .div-container-auth {
+        padding-top: 3rem;
+    }
+}
+
 @media (max-width: 1044px) {
     body {
         background: none;

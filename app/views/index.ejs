@@ -24,8 +24,8 @@
                 <h1 class="h1-form">New task</h1>
                 <form method="POST" action="/tasks">
                     <label for="input-title">Title</label>
-                    <input id="input-title" name="input-title" type="text" placeholder="Type here...">
-                    <% if (result != null && !showModal) { %>
+                    <input id="input-title" name="title" type="text" placeholder="Go shopping">
+                    <% if (result != null && !showModal && result.data.field == "title") { %>
                     <span class="span-error"><%= result.message %></span>
                     <% } %>
                     <button type="submit" class="button-submit">Add</button>
@@ -37,8 +37,7 @@
             <div id="div-tasks">
                 <% if (tasks.length == 0) { %>
                     <p class="p-no-results">You don't have any tasks yet :&#40;</p>
-                <% } else {
-                    tasks.forEach((task) => { %>
+                <% } else { tasks.forEach((task) => { %>
                         <p><%= task.title %></p>
                 <% });} %>
             </div>

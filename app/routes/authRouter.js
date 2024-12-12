@@ -2,6 +2,7 @@
 
 // ----- Import modules -----
 const express = require("express");
+const authService = require("../service/authService");
 
 
 // ----- Create router -----
@@ -15,15 +16,15 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/signup", (req, res, next) => {
-    res.render("sign-up");
+    res.render("sign-up", {result: null, showModal: false});
 });
 
 router.get("/login", (req, res, next) => {
-    res.render("login");
+    res.render("login", {result: null, showModal: false});
 });
 
 
 // -- POST --
-
+router.post("/signup", authService.signUp);
 
 module.exports = router;

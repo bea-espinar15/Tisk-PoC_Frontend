@@ -3,23 +3,41 @@
 
 <head>
     <%- include("head.ejs") %>
+    <link rel="stylesheet" href="/css/modal.css">
     <link rel="stylesheet" href="/css/auth.css">
 </head>
 
 <body>
+    <!-- ------ Response Modal ------ -->
+    <% if (showModal) { %>
+    <%- include("response-modal.ejs") %>
+    <% } %>
+
+    <!-- ------ Content ------ -->
     <div class="div-container-auth">
         <div class="div-auth">
             <h1>Login</h1>
             <form method="post" action="/signup">
+                <!-- Email -->
                 <label for="input-email">Email</label>
-                <input id="input-email" name="input-email" type="text" placeholder="example@gmail.com">
+                <input id="input-email" name="email" type="text" placeholder="example@gmail.com">
+                <% if (result != null && !showModal && result.data.field == "email") { %>
+                <span class="span-error"><%= result.message %></span>
+                <% } %>
+                <!-- Password -->
                 <label for="input-pass">Password</label>
-                <input id="input-pass" name="input-pass" type="password" placeholder="Enter your password">
+                <input id="input-pass" name="password" type="password" placeholder="Enter your password">
+                <% if (result != null && !showModal && result.data.field == "password") { %>
+                <span class="span-error"><%= result.message %></span>
+                <% } %>
+                <!-- Submit -->
                 <button type="submit">Sign In</button>
             </form>
             <p>New here? <a href="/signup">Create an account</a></p>
         </div>
     </div>   
+
+    <script src="/js/modal.js"></script>
 </body>
 
 </html>
