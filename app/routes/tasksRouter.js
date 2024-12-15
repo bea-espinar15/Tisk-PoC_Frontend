@@ -1,25 +1,25 @@
 "use strict"
 
-// ----- Import modules -----
+// * ----- Import modules ----- *
 const express = require("express");
 const callHandler = require("../utils/callHandler");
 
 
-// ----- Create router -----
+// * ----- Create router ----- *
 const router = express.Router();
 
 
-// ----- Endpoints -----
+// * ----- Endpoints ----- *
 // -- GET --
 router.get("/", async (req, res, next) => {
     // Call API
-    const result = await callHandler.handleGetCall("/tasks", null);
+    const result = await callHandler.handleGetCall("/tasks", req.session.user.accessToken);
     // Handle response
     res.status(result.code);
     if (result.code == 404 || result.code == 500)
-        res.render("error-page", {result: result});
+        res.render("error-page", {result: result, username: req.session.user.username});
     else {
-        res.render("index", {showModal: false, result: null, tasks: result.data});
+        res.render("index", {showModal: false, result: null, tasks: result.data, username: req.session.user.username});
     }
 });
 
@@ -31,15 +31,15 @@ router.post("/", async (req, res, next) => {
         title: req.body.title
     }
     // Call API
-    const result = await callHandler.handlePostCall("/tasks", body);
+    const result = await callHandler.handlePostCall("/tasks", req.session.user.accessToken, body);
     // Get tasks for render
-    const tasks = await callHandler.handleGetCall("/tasks", null);
+    const tasks = await callHandler.handleGetCall("/tasks", req.session.user.accessToken);
     // Handle response
     res.status(Math.max(result.code, tasks.code));
     if (result.code == 404 || tasks.code == 404 || result.code == 500 || tasks.code == 500)
-        res.render("error-page", {result: result});
+        res.render("error-page", {result: result, username: req.session.user.username});
     else
-        res.render("index", {showModal: result.code != 400, result: result, tasks: tasks.data});
+        res.render("index", {showModal: result.code != 400, result: result, tasks: tasks.data, username: req.session.user.username});
 });
 
 

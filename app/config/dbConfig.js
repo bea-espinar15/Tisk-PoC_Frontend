@@ -1,9 +1,9 @@
 "use strict"
 
-// ----- Import modules -----
+// * ----- Import modules ----- *
 const constants = require("./constants");
 
-// ----- DB config -----
+// * ----- DB config ----- *
 const dbConfig = {
     host: constants.SECRETS["MYSQL_HOST"],
     port: constants.SECRETS["MYSQL_PORT"],

@@ -16,6 +16,10 @@ const ERROR_RESPONSE = Object.freeze({
         title: "Unknown error :(",
         message: "An unexpected error ocurred, try again in a few moments."
     },
+    BAD_REQUEST: {
+        title: "Oops! Something went wrong :(",
+        message: "An unexpected error ocurred, we are already working on it."
+    },
     FIELD_REQUIRED: {
         title: "Invalid data",
         message: "You need to complete this field."
@@ -35,6 +39,10 @@ const ERROR_RESPONSE = Object.freeze({
     EMAIL_ALREADY_EXISTS: {
         title: "User already exists",
         message: "This email is already registered in Tisk."
+    },
+    WRONG_CREDENTIALS: {
+        title: "Wrong credentials",
+        message: "Email or password is not valid"
     }
 });
 

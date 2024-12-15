@@ -1,6 +1,6 @@
 "use strict"
 
-// ----- Import modules -----
+// * ----- Import modules ----- *
 const firebase = require("firebase/app");
 const {
     getAuth,
@@ -9,9 +9,11 @@ const {
     signOut,
     deleteUser,
 } = require("firebase/auth");
+const admin = require("firebase-admin");
 const constants = require("./constants");
+const serviceAccount = constants.FIREBASE_SERVICE;
 
-// ----- Configure Firebase and init app -----
+// * ----- Configure Firebase and init app ----- *
 const firebaseConfig = {
     apiKey: constants.SECRETS["FIREBASE_API_KEY"],
     authDomain: constants.SECRETS["FIREBASE_AUTH_DOMAIN"],
@@ -23,10 +25,16 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+// * ----- Configure admin Service Account ----- *
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
+
 module.exports = {
     getAuth,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     signOut,
-    deleteUser
-  };
+    deleteUser,
+    admin
+};

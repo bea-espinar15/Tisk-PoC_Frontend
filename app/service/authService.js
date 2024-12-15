@@ -1,6 +1,6 @@
 "use strict"
 
-// ----- Import modules -----
+// * ----- Import modules ----- *
 const {
     getAuth,
     createUserWithEmailAndPassword,
@@ -14,7 +14,7 @@ const callHandler = require("../utils/callHandler");
 const Result = require("../utils/result");
 
 
-// ----- Get auth object -----
+// * ----- Get auth object ----- *
 const auth = getAuth();
 
 
@@ -48,13 +48,15 @@ class AuthService {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
+            // Login as an Admin
+            const adminCredential = await signInWithEmailAndPassword(auth, constants.SECRETS["FIREBASE_ADMIN_EMAIL"], constants.SECRETS["FIREBASE_ADMIN_PASSWORD"]);
             // Create user in Tisk database
             const body = {
                 username: username,
                 email: email,
                 firebaseUid: userCredential.user.uid
             }
-            const result = await callHandler.handlePostCall("/users", body);
+            const result = await callHandler.handlePostCall("/users", adminCredential._tokenResponse.idToken, body);
             if (result.code != 200) {
                 // Undo registration in Firebase
                 await deleteUser(userCredential.user);
@@ -72,13 +74,65 @@ class AuthService {
             }
         }
         catch (error) {
-            if (error.code === "auth/email-already-in-use")
+            if (error.code == "auth/email-already-in-use")
                 return res.status(400).render("sign-up", {result: new Result(false, 400, ERROR_RESPONSE["EMAIL_ALREADY_EXISTS"], null), showModal: true});
             else
-            return res.status(500).render("sign-up", {result: new Result(false, 500, ERROR_RESPONSE["SERVER_ERROR"], null), showModal: true});
+                return res.status(500).render("sign-up", {result: new Result(false, 500, ERROR_RESPONSE["SERVER_ERROR"], null), showModal: true});
         }
     }
 
+
+    // -- LOGIN --
+    // Logs the user into Firebase retrieving an authentication token and creates an Express session for them
+    async login(req, res, next) {
+        // Get data
+        const email = req.body["email"];
+        const password = req.body["password"];
+        
+        // Validate empty fields
+        if (!email)
+            return res.status(400).render("login", {result: new Result(false, 400, ERROR_RESPONSE["FIELD_REQUIRED"], {field: "email"}), showModal: false});
+        if (!password)
+            return res.status(400).render("login", {result: new Result(false, 400, ERROR_RESPONSE["FIELD_REQUIRED"], {field: "password"}), showModal: false});
+
+        // Login against Firebase
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            // Retrieve user info from Tisk database
+            const result = await callHandler.handleGetCall("/users/me", userCredential._tokenResponse.idToken);
+            if (result.code != 200)
+                return res.status(result.code).render("login", {result: result, showModal: true});
+            else {
+                req.session.user = {
+                    username: result.data.username,
+                    email: result.data.email,
+                    firebaseUid: result.data.firebaseUid,
+                    accessToken: userCredential._tokenResponse.idToken
+                }
+                return res.status(200).redirect("/tasks");
+            }
+        }
+        catch (error) {
+            if (error.code == "auth/invalid-credential")
+                return res.status(400).render("login", {result: new Result(false, 400, ERROR_RESPONSE["WRONG_CREDENTIALS"], null), showModal: true});
+            else
+                return res.status(500).render("login", {result: new Result(false, 500, ERROR_RESPONSE["SERVER_ERROR"], null), showModal: true});
+        }
+    }
+
+
+    // -- LOGOUT --
+    // Logs the user out of Firebase and then deletes Express session
+    async logout(req, res, next) {
+        try {
+            await signOut(auth);
+            req.session.destroy();
+            return res.status(200).redirect("/login");
+        }
+        catch (error) {
+            return res.status(500);
+        }
+    }
 }
 
 module.exports = new AuthService();

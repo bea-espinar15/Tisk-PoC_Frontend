@@ -50,7 +50,8 @@ button {
     border: none;
     border-radius: 15px;    
     color: var(--neutral-50);
-    background-color: var(--primary-600);    
+    background-color: var(--primary-600);
+    cursor: pointer;  
 }
 
 button:focus-visible {
@@ -167,6 +168,10 @@ small {
 #div-hamburger {
     display: flex;
     gap: 1rem;
+}
+
+#form-logout {
+    cursor: pointer;
 }
 
 #p-logout {

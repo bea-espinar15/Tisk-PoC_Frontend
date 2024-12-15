@@ -1,6 +1,6 @@
 "use strict"
 
-// ----- Import modules -----
+// * ----- Import modules ----- *
 // 1. CORE
 const path = require("path");
 
@@ -18,10 +18,11 @@ const logger = require("./config/logger");
 const tasksRouter = require("./routes/tasksRouter");
 const authRouter = require("./routes/authRouter");
 const Result = require("./utils/result");
+const { userLogged } = require("./utils/middlewares");
 const { ERROR_RESPONSE } = require("./utils/responseEnum");
 
 
-// ----- Configure app -----
+// * ----- Configure app ----- *
 const app = express();
 
 // -- Templates: EJS --
@@ -52,19 +53,19 @@ const sessionMiddleware = session({
 app.use(sessionMiddleware);
 
 
-// ----- Routers -----
+// * ----- Routers ----- *
 app.use("/", authRouter);
-app.use("/tasks", tasksRouter);
+app.use("/tasks", userLogged, tasksRouter);
 
 
-// ----- 404 Handler -----
+// * ----- 404 Handler ----- *
 app.use((req, res, next) => {
     res.status(404);
     res.render("error-page", {result: new Result(false, 404, ERROR_RESPONSE["NOT_FOUND"], null)});
 });
 
 
-// ----- Init server -----
+// * ----- Init server ----- *
 app.listen(constants.CONFIG["PORT_ORCHESTRATOR"], (error) => {
     if (error) {
         logger.error(`[GENERAL] - Error initializing server: ${error.message}`);

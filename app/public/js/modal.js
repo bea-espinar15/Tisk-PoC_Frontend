@@ -1,8 +1,9 @@
-var closeModal = document.getElementById("span-close-modal");
+$(() => {
+    var closeModal = $("#span-close-modal");
 
-if (closeModal != null) {
-    closeModal.onclick = function() {
-        var modal = document.getElementById("div-response-modal");
-        modal.style.display = "none";
-    };
-}
+    if (closeModal != null) {
+        closeModal.on("click", () => {
+            $("#div-response-modal").hide();
+        });
+    }
+});

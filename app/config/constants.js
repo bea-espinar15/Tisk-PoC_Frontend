@@ -1,22 +1,24 @@
 "use strict"
 
-// ----- Load environment variables -----
+// * ----- Load environment variables ----- *
 require('dotenv').config();
 const APP_ENV = process.env.APP_ENV;
 const CONFIG_PATH = process.env.CONFIG_PATH;
 const SECRETS_PATH = process.env.SECRETS_PATH;
+const FIREBASE_SERVICE_PATH = process.env.FIREBASE_SERVICE_PATH;
 
 const CONFIG = require(CONFIG_PATH);
 const SECRETS = require(SECRETS_PATH);
+const FIREBASE_SERVICE = require(FIREBASE_SERVICE_PATH);
 
-// ----- Basic config -----
+// * ----- Basic config ----- *
 const DB_CONFIG = {
     CLEAR_EXPIRED: true,
     CHECK_EXPIRATION_INTERVAL: 12 * 60 * 60 * 1000,
     TTL: 7 * 24 * 60 * 60 * 1000
 }
 
-// ----- Others -----
+// * ----- Others ----- *
 const REGEX = {
     USERNAME_REGEX: /^[a-z0-9_]{5,20}$/,
     EMAIL_REGEX: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -24,11 +26,12 @@ const REGEX = {
 }
 
 
-// ----- Export -----
+// * ----- Export ----- *
 module.exports = {
     APP_ENV, 
     CONFIG,
     SECRETS,
+    FIREBASE_SERVICE,
     DB_CONFIG,
     REGEX
 }

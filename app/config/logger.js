@@ -1,10 +1,10 @@
 "use strict"
 
-// ----- Import modules -----
+// * ----- Import modules ----- *
 const winston = require('winston');
 const constants = require("./constants");
 
-// ----- Configure logger -----
+// * ----- Configure logger ----- *
 const logFormat = winston.format.printf(({ timestamp, level, message }) => {
   return `[${timestamp}] [${level.toUpperCase()}] ${message}`;
 });
