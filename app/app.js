@@ -48,7 +48,13 @@ const sessionMiddleware = session({
     secret: constants.SECRETS["COOKIE_SECRET"],
     resave: true,
     store: sessionStore,
-    rolling: true
+    rolling: true,
+    cookie: {
+        maxAge: constants.SESSION_CONFIG["MAX_AGE"],
+        secure: constants.APP_ENV == "pro",
+        httpOnly: true,
+        sameSite: "strict"
+    }
 });
 app.use(sessionMiddleware);
 

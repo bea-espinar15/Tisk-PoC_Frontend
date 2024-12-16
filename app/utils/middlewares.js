@@ -1,7 +1,6 @@
 "use strict"
 
 // * ----- Import modules ----- *
-const { admin } = require("../config/firebaseConfig");
 const logger = require("../config/logger");
 const authService = require("../service/authService");
 
@@ -12,21 +11,20 @@ const userLogged = async (req, res, next) => {
     let verified = false;
     if (req.session.user && req.session.user.accessToken) {
         try {
-            const decodedToken = await admin.auth().verifyIdToken(req.session.user.accessToken);
-            verified = true;
+            verified = await authService.verifyToken(req, res, next);
         }
         catch (error) {
             if (error.code == "auth/id-token-expired")
-                return await authService.logout(req, res, next);
+                verified = await authService.refreshToken(req, res, next);
             else if (error.code == "auth/invalid-id-token" || error.code == "auth/argument-error")
                 logger.error("[AUTH] Access token is not valid");
             else
-                logger.error("[AUTH] Error verifying token against Firebase");
+                logger.error(`[AUTH] Error verifying token against Firebase: ${error.code}`);
         }
     }        
 
     if (verified) next();
-    else res.status(401).redirect("/login");
+    else return await authService.logout(req, res, next);
 };
 
 // Check if user is already logged

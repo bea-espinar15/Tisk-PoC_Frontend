@@ -1,15 +1,18 @@
 "use strict"
 
 // * ----- Import modules ----- *
+const axios = require('axios');
 const {
     getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
-    deleteUser
+    deleteUser,
+    admin
 } = require('../config/firebaseConfig');
 const { ERROR_RESPONSE } = require('../utils/responseEnum');
 const constants = require("../config/constants");
+const logger = require("../config/logger");
 const callHandler = require("../utils/callHandler");
 const Result = require("../utils/result");
 
@@ -68,7 +71,8 @@ class AuthService {
                     username: username,
                     email: email,
                     firebaseUid: userCredential.user.uid,
-                    accessToken: userCredential.user.accessToken
+                    accessToken: userCredential.user.accessToken,
+                    refreshToken: userCredential.user.refreshToken
                 }
                 return res.status(200).redirect("/tasks");
             }
@@ -107,7 +111,8 @@ class AuthService {
                     username: result.data.username,
                     email: result.data.email,
                     firebaseUid: result.data.firebaseUid,
-                    accessToken: userCredential._tokenResponse.idToken
+                    accessToken: userCredential._tokenResponse.idToken,
+                    refreshToken: userCredential._tokenResponse.refreshToken
                 }
                 return res.status(200).redirect("/tasks");
             }
@@ -121,16 +126,48 @@ class AuthService {
     }
 
 
+    // -- VERIFY TOKEN --
+    async verifyToken(req, res, next) {
+        const decodedToken = await admin.auth().verifyIdToken(req.session.user.accessToken);
+        return true;
+    }
+
+
+    // -- REFRESH TOKEN --
+    async refreshToken(req) {
+        try {
+            const response = await axios.post(`${constants.CONFIG["FIREBASE_API_TOKEN_URL"]}${constants.SECRETS["FIREBASE_API_KEY"]}`, {
+                grant_type: "refresh_token",
+                refresh_token: req.session.user.refreshToken
+            });
+
+            // Update session
+            req.session.user.accessToken = response.data.id_token;
+            req.session.user.refreshToken = response.data.refresh_token;
+            
+            return true;
+        } 
+        catch (error) {
+            logger.error(`[AUTH] Error refreshing token against API: ${error}`);
+            return false;
+        }
+    }
+
+
     // -- LOGOUT --
     // Logs the user out of Firebase and then deletes Express session
     async logout(req, res, next) {
         try {
             await signOut(auth);
-            req.session.destroy();
-            return res.status(200).redirect("/login");
+            if (req.session.user) {
+                req.session.destroy();
+                return res.status(200).redirect("/login");
+            }
+            else
+                return res.status(401).redirect("/login");
         }
         catch (error) {
-            return res.status(500);
+            return res.status(500).json();
         }
     }
 }

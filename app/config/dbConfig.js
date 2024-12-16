@@ -11,9 +11,8 @@ const dbConfig = {
     pass: constants.SECRETS["MYSQL_PASS"],
     database: constants.CONFIG["MYSQL_TISK_DB"],
     
-    clearExpired: constants.DB_CONFIG["CLEAR_EXPIRED"],  // Remove expired sessions
-    checkExpirationInterval:  constants.DB_CONFIG["CHECK_EXPIRATION_INTERVAL"],  // Interval to check if there's any expired session
-    ttl: constants.DB_CONFIG["TTL"],  // Session expires after 1 week of inactivity
+    clearExpired: true,  // Remove expired sessions
+    checkExpirationInterval:  constants.SESSION_CONFIG["CHECK_EXPIRATION_INTERVAL"]  // Interval to check if there's any expired session
 }
 
 module.exports = dbConfig;

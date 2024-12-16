@@ -16,10 +16,6 @@ const ERROR_RESPONSE = Object.freeze({
         title: "Unknown error :(",
         message: "An unexpected error ocurred, try again in a few moments."
     },
-    BAD_REQUEST: {
-        title: "Oops! Something went wrong :(",
-        message: "An unexpected error ocurred, we are already working on it."
-    },
     FIELD_REQUIRED: {
         title: "Invalid data",
         message: "You need to complete this field."

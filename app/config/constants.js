@@ -12,10 +12,9 @@ const SECRETS = require(SECRETS_PATH);
 const FIREBASE_SERVICE = require(FIREBASE_SERVICE_PATH);
 
 // * ----- Basic config ----- *
-const DB_CONFIG = {
-    CLEAR_EXPIRED: true,
+const SESSION_CONFIG = {
     CHECK_EXPIRATION_INTERVAL: 12 * 60 * 60 * 1000,
-    TTL: 7 * 24 * 60 * 60 * 1000
+    MAX_AGE: 7 * 24 * 60 * 60 * 1000
 }
 
 // * ----- Others ----- *
@@ -32,6 +31,6 @@ module.exports = {
     CONFIG,
     SECRETS,
     FIREBASE_SERVICE,
-    DB_CONFIG,
+    SESSION_CONFIG,
     REGEX
 }
