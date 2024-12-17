@@ -2,9 +2,9 @@ $(() => {
     const buttonHamburger = $("#button-hamburger");
     const divHamburger = $("#div-hamburger");
     
-    buttonHamburger.on("click", () => {
-        buttonHamburger.classList.toggle("active");
-        divHamburger.classList.toggle("collapsed-menu");
+    buttonHamburger.on("click", function() {
+        $(this).toggleClass("active");
+        divHamburger.toggleClass("collapsed-menu");
     });
     
     const logout = $("#form-logout");

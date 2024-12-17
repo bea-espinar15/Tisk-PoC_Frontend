@@ -1,6 +1,7 @@
 "use strict"
 
 // * ----- Import modules ----- *
+const i18n = require('i18n');
 const logger = require("../config/logger");
 const authService = require("../service/authService");
 
@@ -30,13 +31,34 @@ const userLogged = async (req, res, next) => {
 // Check if user is already logged
 function userAlreadyLogged(req, res, next) {
     if (req.session.user)
-        res.redirect("/tasks");
+       res.redirect("/tasks");
     else
         next();
 };
 
+// Set language
+function setLocale(req, res, next) {
+    const supportedLangs = ["en", "es"];
+    const urlParts = req.path.split("/");
+
+    // Check last split
+    const lang = urlParts.pop();
+    if (supportedLangs.includes(lang)) {
+        i18n.setLocale(req, lang);
+        req.url = urlParts.join('/') || '/';
+    }
+    next();
+}
+
+// Add translations to request
+function addResponseLocale(req, res, next) {
+    req.responses = require(`../locales/response_${req.locale}.json`);
+    next();
+}
 
 module.exports = {
     userLogged,
-    userAlreadyLogged
+    userAlreadyLogged,
+    setLocale,
+    addResponseLocale
 }

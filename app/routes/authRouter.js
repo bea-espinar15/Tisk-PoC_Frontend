@@ -17,11 +17,11 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/signup", userAlreadyLogged, (req, res, next) => {
-    res.render("sign-up", {result: null, showModal: false});
+    res.render("sign-up", {locale: req.locale, result: null, showModal: false});
 });
 
 router.get("/login", userAlreadyLogged, (req, res, next) => {
-    res.render("login", {result: null, showModal: false});
+    res.render("login", {locale: req.locale, result: null, showModal: false});
 });
 
 

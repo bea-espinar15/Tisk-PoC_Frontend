@@ -1,5 +1,5 @@
 <div id="div-nav" class="row-space-between">
-    <img src="/img/logo_white.png" alt="Tisk logo" width="80">
+    <img src="/img/logo_white.png" alt="<%= __("alt_tisk_logo") %>" width="80">
     <!-- Hamburger button -->
     <button id="button-hamburger" aria-label="menu">
         <span class="bar"></span>
@@ -8,13 +8,18 @@
     </button>
     <!-- Hamburger menu -->
     <div id="div-hamburger" class="row-space-between">
-        <div class="div-menu">
-            <img src="/img/language/en.png" alt="USA flag" width="15">
-            <p class="white">EN</p>
-        </div>
+        <a href="/tasks/en" class="div-menu">
+            <img src="/img/language/en.png" alt="<%= __("alt_en_flag") %>" width="15">
+            <p class="white <% if (locale === "en") { %> bold <% } %>">EN</p>
+        </a>
+        <div id="div-separator"></div>
+        <a href="/tasks/es" class="div-menu">
+            <img src="/img/language/es.png" alt="<%= __("alt_es_flag") %>" width="15">
+            <p class="white <% if (locale === "es") { %> bold <% } %>">ES</p>
+        </a>
         <p class="white"><%= username %></p>
-        <form id="form-logout" class="div-menu" method="post" action="/logout">
-            <p id="p-logout" class="white">Log out</p>
+        <form id="form-logout" class="div-menu" method="post" action="/logout/<%= locale %>">
+            <p id="p-logout" class="white"><%= __("log_out") %></p>
             <img src="/img/icons/logout.png" alt="Logout" width="30">                
         </form>            
     </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%= locale %>">
 
 <head>
     <%- include("head.ejs") %>
@@ -16,24 +16,24 @@
     <!-- ------ Content ------ -->
     <div class="div-container-auth">
         <div class="div-auth">
-            <h1>Login</h1>
-            <form method="post" action="/login">
+            <h1><%= __("login") %></h1>
+            <form method="post" action="/login/<%= locale %>">
                 <!-- Email -->
-                <label for="input-email">Email</label>
-                <input id="input-email" name="email" type="text" placeholder="example@gmail.com">
+                <label for="input-email"><%= __("email") %></label>
+                <input id="input-email" name="email" type="text" placeholder="<%= __("email_placeholder") %>">
                 <% if (result != null && !showModal && result.data.field == "email") { %>
                 <span class="span-error"><%= result.message %></span>
                 <% } %>
                 <!-- Password -->
-                <label for="input-pass">Password</label>
-                <input id="input-pass" name="password" type="password" placeholder="Enter your password">
+                <label for="input-pass"><%= __("password") %></label>
+                <input id="input-pass" name="password" type="password" placeholder="<%= __("password_login_placeholder") %>">
                 <% if (result != null && !showModal && result.data.field == "password") { %>
                 <span class="span-error"><%= result.message %></span>
                 <% } %>
                 <!-- Submit -->
-                <button type="submit">Sign In</button>
+                <button type="submit"><%= __("sign_in") %></button>
             </form>
-            <p>New here? <a href="/signup">Create an account</a></p>
+            <p><%= __("new_here") %> <a href="/signup/<%= locale %>"><%= __("create_an_account") %></a></p>
         </div>
     </div>   
 

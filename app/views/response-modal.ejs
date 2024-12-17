@@ -3,9 +3,9 @@
         <span id="span-close-modal">&times;</span>
         <div id="div-modal-title">
             <% if (result.success) { %>
-                <img src="/img/icons/success.png" alt="Success Icon" width="25">
+                <img src="/img/icons/success.png" alt="<%= __("alt_success_icon") %>" width="25">
             <% } else { %>
-                <img src="/img/icons/error.png" alt="Error Icon" width="25">
+                <img src="/img/icons/error.png" alt="<%= __("alt_error_icon") %>" width="25">
             <% } %>
             <h2><%= result.title %></h2>
         </div>        

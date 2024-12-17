@@ -7,9 +7,9 @@ const path = require("path");
 // 2. PACKAGE
 const express = require("express");
 const morgan = require("morgan");
-const mySql = require("mysql");
 const session = require("express-session");
 const mySqlSession = require("express-mysql-session");
+const i18n = require('i18n');
 
 // 3. FILE
 const constants = require("./config/constants");
@@ -18,8 +18,7 @@ const logger = require("./config/logger");
 const tasksRouter = require("./routes/tasksRouter");
 const authRouter = require("./routes/authRouter");
 const Result = require("./utils/result");
-const { userLogged } = require("./utils/middlewares");
-const { ERROR_RESPONSE } = require("./utils/responseEnum");
+const { userLogged, setLocale, addResponseLocale } = require("./utils/middlewares");
 
 
 // * ----- Configure app ----- *
@@ -58,6 +57,21 @@ const sessionMiddleware = session({
 });
 app.use(sessionMiddleware);
 
+// -- Multilanguage --
+i18n.configure({
+    locales: ['en', 'es'],
+    defaultLocale: 'en',
+    directory: path.join(__dirname, 'locales'),
+    objectNotation: true,
+    detectBrowserLanguage: true
+});
+app.use(i18n.init);
+
+
+// * ----- Middlewares ----- *
+app.use(setLocale);
+app.use(addResponseLocale);
+
 
 // * ----- Routers ----- *
 app.use("/", authRouter);
@@ -67,7 +81,7 @@ app.use("/tasks", userLogged, tasksRouter);
 // * ----- 404 Handler ----- *
 app.use((req, res, next) => {
     res.status(404);
-    res.render("error-page", {result: new Result(false, 404, ERROR_RESPONSE["NOT_FOUND"], null)});
+    res.render("error-page", { locale: req.locale, username: req.session.user.username, result: new Result(false, 404, req.responses["NOT_FOUND"], null) });
 });
 
 

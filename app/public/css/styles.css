@@ -101,8 +101,14 @@ small {
 
 .div-menu {
     display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 0 10px;
+    text-decoration: none;
+}
+
+.bold {
+    font-weight: bold;
 }
 
 .div-column {
@@ -170,6 +176,12 @@ small {
     gap: 1rem;
 }
 
+#div-separator {
+    width: 1px;
+    height: 1.5rem;
+    border-left: 0.1rem solid var(--neutral-600);
+}
+
 #form-logout {
     cursor: pointer;
 }
@@ -217,6 +229,10 @@ small {
     background-color: white;
     border-radius: 2px;
     transition: transform 0.3s ease;
+}
+
+#div-hamburger > p {
+    margin-left: 2rem;
 }
 
 #div-tasks > p {
@@ -298,7 +314,8 @@ small {
         right: 0;        
     }
 
-    #div-hamburger.collapsed-menu > div, 
+    #div-hamburger.collapsed-menu > a, 
+    #div-hamburger.collapsed-menu > form, 
     #div-hamburger.collapsed-menu > p,
     #div-hamburger.collapsed-menu > img {
         margin: 0;
@@ -309,6 +326,10 @@ small {
         display: block;
         color: white;
         width: auto;
+    }
+
+    #div-separator {
+        display: none;
     }
 
     .div-menu > p {
