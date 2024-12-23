@@ -1,14 +1,12 @@
-$(() => {
-    const buttonHamburger = $("#button-hamburger");
-    const divHamburger = $("#div-hamburger");
-    
-    buttonHamburger.on("click", function() {
-        $(this).toggleClass("active");
-        divHamburger.toggleClass("collapsed-menu");
+"use strict"
+
+if ("serviceWorker" in navigator) {
+    $(window).on("load", async () => {
+        try {
+            const sw = await navigator.serviceWorker.register("/js/service-worker.js");
+            console.log("Service worker registered");
+        } catch (err) {
+            console.error("Service worker registration failed", err);
+        }
     });
-    
-    const logout = $("#form-logout");
-    logout.on("click", async () => {
-        logout.submit();
-    });
-});
+}

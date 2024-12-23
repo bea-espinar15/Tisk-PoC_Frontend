@@ -1,4 +1,6 @@
 {
+    "meta_description": "Prueba de Concepto de Tisk, una aplicación con un algoritmo de planificación",
+
     "create_account": "Crear cuenta",
     "login": "Iniciar sesión",
     "username": "Nombre de usuario",

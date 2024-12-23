@@ -1,4 +1,6 @@
 {
+    "meta_description": "Proof of Concept of Tisk, an app with a planning algorithm",
+
     "create_account": "Create account",
     "login": "Login",
     "username": "Username",

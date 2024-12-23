@@ -55,7 +55,7 @@ body {
 /* --- RESPONSIVENESS --- */
 @media (max-width: 1600px) {
     .div-container-auth {
-        padding-top: 3rem;
+        padding-top: 5rem;
     }
 }
 

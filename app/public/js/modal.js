@@ -1,3 +1,5 @@
+"use strict"
+
 $(() => {
     var closeModal = $("#span-close-modal");
 
