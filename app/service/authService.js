@@ -80,9 +80,10 @@ class AuthService {
             else {
                 // Automatically log the user in
                 req.session.user = {
-                    username: username,
-                    email: email,
-                    firebaseUid: userCredential.user.uid,
+                    username: result.data.username,
+                    email: result.data.email,
+                    firebaseUid: result.data.firebaseUid,
+                    notificationsAllowed: result.data.notificationsAllowed,
                     accessToken: userCredential.user.accessToken,
                     refreshToken: userCredential.user.refreshToken
                 }
@@ -138,6 +139,7 @@ class AuthService {
                     username: result.data.username,
                     email: result.data.email,
                     firebaseUid: result.data.firebaseUid,
+                    notificationsAllowed: result.data.notificationsAllowed,
                     accessToken: userCredential._tokenResponse.idToken,
                     refreshToken: userCredential._tokenResponse.refreshToken
                 }

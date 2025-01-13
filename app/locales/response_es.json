@@ -3,6 +3,19 @@
         "title": "Tarea creada correctamente",
         "message": "La tarea se ha creado con éxito. ¡Puedes revisarla en tu lista de tareas!"
     },
+    "SUBSCRIPTION_CREATED": {
+        "title": "Notificaciones activadas correctamente",
+        "message": "A partir de ahora, ya puedes empezar a recibir notificaciones de Tisk en este dispositivo"
+    },
+    "NOTIFICATIONS_ALLOWED": {
+        "title": "Notificaciones activadas correctamente",
+        "message": "A partir de ahora, ya puedes volver a recibir notificaciones de Tisk en este dispositivo"
+    },
+    "NOTIFICATIONS_BLOCKED": {
+        "title": "Notificaciones desactivadas correctamente",
+        "message": "A partir de ahora, ya no recibirás más notificaciones de Tisk en ninguno de tus dispositivos"
+    },
+
     "NOT_FOUND": {
         "title": "Ups! Página no encontrada",
         "message": "Por desgracia, la página a la que intentas acceder no existe"
@@ -34,5 +47,9 @@
     "WRONG_CREDENTIALS": {
         "title": "Credenciales incorrectas",
         "message": "El correo o la contraseña no son correctos"
+    },
+    "NOTIFICATIONS_DISABLED": {
+        "title": "Notificaciones bloqueadas",
+        "message": "Las notificaciones están bloqueadas en todos los dispositivos. Si quieres empezar a recibir notificaciones de Tisk debes activarlas primero."
     }
 }

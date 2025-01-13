@@ -17,6 +17,7 @@ const dbConfig = require("./config/dbConfig");
 const logger = require("./config/logger");
 const tasksRouter = require("./routes/tasksRouter");
 const authRouter = require("./routes/authRouter");
+const notificationsRouter = require("./routes/notificationsRouter");
 const Result = require("./utils/result");
 const { userLogged, setLocale, addResponseLocale } = require("./utils/middlewares");
 
@@ -52,7 +53,7 @@ const sessionMiddleware = session({
         maxAge: constants.SESSION_CONFIG["MAX_AGE"],
         secure: constants.APP_ENV == "pro",
         httpOnly: true,
-        sameSite: "strict"
+        sameSite: "lax"
     }
 });
 app.use(sessionMiddleware);
@@ -76,12 +77,14 @@ app.use(addResponseLocale);
 // * ----- Routers ----- *
 app.use("/", authRouter);
 app.use("/tasks", userLogged, tasksRouter);
+app.use("/notifications", userLogged, notificationsRouter);
 
 
 // * ----- 404 Handler ----- *
 app.use((req, res, next) => {
+    const username = req.session.user ? req.session.user.username : "unknown"
     res.status(404);
-    res.render("error-page", { locale: req.locale, username: req.session.user.username, result: new Result(false, 404, req.responses["NOT_FOUND"], null) });
+    res.render("error-page", { locale: req.locale, username: username, result: new Result(false, 404, req.responses["NOT_FOUND"], null) });
 });
 
 

@@ -29,7 +29,11 @@
     "my_files": "Mis ficheros",
     "notifications": "Notificaciones",
     "allow_notifications": "Permitir notificaciones",
+    "disable_notifications": "Bloquear notificaciones",
     "notifications_disabled": "Las notificaciones están desactivadas en todos los dispositivos.",
+    "notifications_granted": "Si quieres desactivar las notificaciones en este dispositivo cambia la configuración del navegador.",
+    "notifications_default": "Aún no has permitido las notificaciones en este dispositivo, actívalas $a{aquí}.",
+    "notifications_denied": "Tienes bloqueadas las notificaciones en este dispositivo, actívalas cambiando la configuración del navegador.",
     "send_notification": "¡Envíame una notificación!",
 
     "alt_pdf_icon": "Icono PDF",

@@ -76,18 +76,29 @@
         <!-- --- Notifications --- -->
         <div class="div-column">
             <!-- Allow notifications -->
-            <div class="div-form">
+            <form id="form-notification-permissions" method="post" action="/notifications/permission" class="div-form">
                 <h1 class="h1-form"><%= __("notifications") %></h1>
-                <button type="button"><%= __("allow_notifications") %></button>
-                <p id="p-notif"><small><%= __("notifications_disabled") %></small></p>
-            </div>
+                <% if (!notificationsAllowed) { %>
+                <button id="button-notification-permissions" type="button" data-allowed="<%= notificationsAllowed %>"><%= __("allow_notifications") %></button>
+                <% } else { %>
+                <button id="button-notification-permissions" type="button" data-allowed="<%= notificationsAllowed %>"><%= __("disable_notifications") %></button>
+                <% } %>
+                <p id="p-notif" 
+                    data-messages='<%= JSON.stringify({
+                        disabled: __("notifications_disabled"), 
+                        granted: __("notifications_granted"),
+                        default: __("notifications_default"),
+                        denied: __("notifications_denied"),
+                    }) %>'>
+                    <small></small>
+                </p>
+            </form>
             <hr>
             <!-- Send notification -->
-            <button id="button-notif" type="button" class="secondary-button"><%= __("send_notification") %></button>
+            <form id="form-send-notification" method="post" action="/notifications"><button id="button-send-notification" type="button" class="secondary-button"><%= __("send_notification") %></button></form>          
         </div>
     </div>
     
-    <script src="/js/main.js"></script>
     <script src="/js/index.js"></script>
     <script src="/js/modal.js"></script>
 </body>

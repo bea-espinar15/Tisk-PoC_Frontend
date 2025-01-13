@@ -24,7 +24,6 @@ const REGEX = {
     PASSWORD_REGEX: /^(?=.*[a-zA-Z])(?=.*\d).{12,}$/
 }
 
-
 // * ----- Export ----- *
 module.exports = {
     APP_ENV, 

@@ -29,7 +29,11 @@
     "my_files": "My files",
     "notifications": "Notifications",
     "allow_notifications": "Allow notifications",
+    "disable_notifications": "Disable notifications",
     "notifications_disabled": "Notifications are disabled in all devices.",
+    "notifications_granted": "If you want to disable notifications in this device, change the browser's configuration.",
+    "notifications_default": "You haven't allowed notifications in this device yet, turn them on $a{here}.",
+    "notifications_denied": "Notifications are blocked in this device, turn them on by changing the browser's configuration.",
     "send_notification": "Send me a notification!",
 
     "alt_pdf_icon": "PDF icon",
