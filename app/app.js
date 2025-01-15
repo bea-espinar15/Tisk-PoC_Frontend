@@ -18,6 +18,7 @@ const logger = require("./config/logger");
 const tasksRouter = require("./routes/tasksRouter");
 const authRouter = require("./routes/authRouter");
 const notificationsRouter = require("./routes/notificationsRouter");
+const filesRouter = require("./routes/filesRouter");
 const Result = require("./utils/result");
 const { userLogged, setLocale, addResponseLocale } = require("./utils/middlewares");
 
@@ -78,6 +79,7 @@ app.use(addResponseLocale);
 app.use("/", authRouter);
 app.use("/tasks", userLogged, tasksRouter);
 app.use("/notifications", userLogged, notificationsRouter);
+app.use("/files", userLogged, filesRouter);
 
 
 // * ----- 404 Handler ----- *

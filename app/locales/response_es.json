@@ -15,6 +15,10 @@
         "title": "Notificaciones desactivadas correctamente",
         "message": "A partir de ahora, ya no recibirás más notificaciones de Tisk en ninguno de tus dispositivos"
     },
+    "FILE_UPLOADED": {
+        "title": "Fichero subido correctamente",
+        "message": "El fichero se ha subido con éxito. ¡Puedes revisarlo y descargarlo desde tu lista de ficheros!"
+    },
 
     "NOT_FOUND": {
         "title": "Ups! Página no encontrada",
@@ -51,5 +55,13 @@
     "NOTIFICATIONS_DISABLED": {
         "title": "Notificaciones bloqueadas",
         "message": "Las notificaciones están bloqueadas en todos los dispositivos. Si quieres empezar a recibir notificaciones de Tisk debes activarlas primero."
+    },
+    "FILE_TYPE_NOT_VALID": {
+        "title": "Fichero no válido",
+        "message": "Sólo se admiten los siguientes tipos de fichero: PNG, JPG, PDF, DOCX, XLSX, TXT."
+    },
+    "FILE_SIZE_TOO_LARGE": {
+        "title": "Fichero demasiado pesado",
+        "message": "El fichero debe ocupar como máximo 5MB."
     }
 }

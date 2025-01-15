@@ -20,16 +20,17 @@ class NotificationsService {
         }
         // Call API
         const result = await callHandler.handlePostCall(req.responses, "/subscriptions", req.session.user.accessToken, body);
-        // Get tasks for render
+        // Get tasks and files for render
         const tasks = await callHandler.handleGetCall(req.responses, "/tasks", req.session.user.accessToken);
+        const files = await callHandler.handleGetCall(req.responses, "/users/files", req.session.user.accessToken);
         // Handle response
-        res.status(Math.max(result.code, tasks.code));
-        if (result.code == 404 || tasks.code == 404 || result.code == 500 || tasks.code == 500) {
-            logger.error(`[GENERAL] Error creating subscription or retrieving tasks: ${result} ${tasks}`);
+        res.status(Math.max(result.code, tasks.code, files.code));
+        if (result.code == 404 || tasks.code == 404 || files.code == 404 || result.code == 500 || tasks.code == 500 || files.code == 500) {
+            logger.error(`[GENERAL] Error creating subscription or retrieving tasks or files: ${result.code} ${tasks.code} ${files.code}`);
             res.render("error-page", { locale: req.locale, result: result, username: req.session.user.username });
         }
         else {
-            res.render("index", { locale: req.locale, showModal: true, result: result, tasks: tasks.data, username: req.session.user.username, notificationsAllowed: req.session.user.notificationsAllowed });
+            res.render("index", { locale: req.locale, showModal: true, result: result, tasks: tasks.data, files: files.data, username: req.session.user.username, notificationsAllowed: req.session.user.notificationsAllowed });
         }
     }
 
@@ -43,17 +44,18 @@ class NotificationsService {
         }
         // Call API
         const result = await callHandler.handlePatchCall(req.responses, "/users", req.session.user.accessToken, body);
-        // Get tasks for render
+        // Get tasks and files for render
         const tasks = await callHandler.handleGetCall(req.responses, "/tasks", req.session.user.accessToken);
-        // Handle response
+        const files = await callHandler.handleGetCall(req.responses, "/users/files", req.session.user.accessToken);
+        // Handle response                
         if (result.code != 200) {
-            res.status(Math.max(result.code, tasks.code));
-            if (result.code == 404 || tasks.code == 404 || result.code == 500 || tasks.code == 500) {
-                logger.error(`[GENERAL] Error updating notifications permissions or retrieving tasks: ${result.code} ${tasks.code}`);
+            res.status(Math.max(result.code, tasks.code, files.code));
+            if (result.code == 404 || tasks.code == 404 || files.code == 404 || result.code == 500 || tasks.code == 500 || files.code == 500) {
+                logger.error(`[GENERAL] Error updating notifications permissions or retrieving tasks or files: ${result.code} ${tasks.code} ${files.code}`);
                 res.render("error-page", { locale: req.locale, result: result, username: req.session.user.username });
             }
             else {
-                res.render("index", { locale: req.locale, showModal: true, result: result, tasks: tasks.data, username: req.session.user.username, notificationsAllowed: req.session.user.notificationsAllowed });
+                res.render("index", { locale: req.locale, showModal: true, result: result, tasks: tasks.data, files: files.data, username: req.session.user.username, notificationsAllowed: req.session.user.notificationsAllowed });
             }
         }
         else {
@@ -70,23 +72,23 @@ class NotificationsService {
                     p256dh: req.body.subscription.keys.p256dh
                 }
                 const resultSubscription = await callHandler.handlePostCall(req.responses, "/subscriptions", req.session.user.accessToken, bodySubscription);
-                res.status(Math.max(resultSubscription.code, tasks.code));
-                if (resultSubscription.code == 404 || tasks.code == 404 || resultSubscription.code == 500 || tasks.code == 500) {
-                    logger.error(`[GENERAL] Error creating subscription or retrieving tasks: ${result.code} ${tasks.code}`);
+                res.status(Math.max(resultSubscription.code, tasks.code, files.code));
+                if (result.code == 404 || tasks.code == 404 || files.code == 404 || result.code == 500 || tasks.code == 500 || files.code == 500) {
+                    logger.error(`[GENERAL] Error creating subscription or retrieving tasks or files: ${result.code} ${tasks.code} ${files.code}`);
                     res.render("error-page", { locale: req.locale, result: resultSubscription, username: req.session.user.username });
                 }
                 else {
-                    res.render("index", { locale: req.locale, showModal: true, result: resultSubscription, tasks: tasks.data, username: req.session.user.username, notificationsAllowed: req.session.user.notificationsAllowed });
+                    res.render("index", { locale: req.locale, showModal: true, result: resultSubscription, tasks: tasks.data, files: files.data, username: req.session.user.username, notificationsAllowed: req.session.user.notificationsAllowed });
                 }
             }
             else {
-                res.status(tasks.code);
-                if (tasks.code == 404 || tasks.code == 500) {
-                    logger.error(`[GENERAL] Error retrieving tasks: ${tasks.code}`);
+                res.status(Math.max(tasks.code, files.code));
+                if (tasks.code == 404 || files.code == 404 || tasks.code == 500 || files.code == 500) {
+                    logger.error(`[GENERAL] Error retrieving tasks or files: ${tasks.code} ${files.code}`);
                     res.render("error-page", { locale: req.locale, result: result, username: req.session.user.username });
                 }
                 else {
-                    res.render("index", { locale: req.locale, showModal: true, result: result, tasks: tasks.data, username: req.session.user.username, notificationsAllowed: req.session.user.notificationsAllowed });
+                    res.render("index", { locale: req.locale, showModal: true, result: result, tasks: tasks.data, files: files.data, username: req.session.user.username, notificationsAllowed: req.session.user.notificationsAllowed });
                 }
             }
         }
@@ -97,17 +99,18 @@ class NotificationsService {
     sendNotification = async (req, res, next) => {
         // Call API
         const result = await callHandler.handleGetCall(req.responses, "/subscriptions", req.session.user.accessToken);
-        // Get tasks for render
+        // Get tasks and files for render
         const tasks = await callHandler.handleGetCall(req.responses, "/tasks", req.session.user.accessToken);
+        const files = await callHandler.handleGetCall(req.responses, "/users/files", req.session.user.accessToken);
         // Handle response
-        res.status(Math.max(result.code, tasks.code));
-        if (result.code == 404 || tasks.code == 404 || result.code == 500 || tasks.code == 500) {
-            logger.error(`[GENERAL] Error creating subscription or retrieving tasks: ${result.code} ${tasks.code}`);
+        res.status(Math.max(result.code, tasks.code, files.code));
+        if (result.code == 404 || tasks.code == 404 || files.code == 404 || result.code == 500 || tasks.code == 500 || files.code == 500) {
+            logger.error(`[GENERAL] Error creating subscription or retrieving tasks or files: ${result.code} ${tasks.code} ${files.code}`);
             res.render("error-page", { locale: req.locale, result: result, username: req.session.user.username });
         }
         else if (result.code == 400) {
             logger.info(`[BUSINESS] User ${req.session.user.username} attempted to send a notification without having allowed it`);
-            res.render("index", { locale: req.locale, showModal: true, result: result, tasks: tasks.data, username: req.session.user.username, notificationsAllowed: req.session.user.notificationsAllowed });
+            res.render("index", { locale: req.locale, showModal: true, result: result, tasks: tasks.data, files: files.data, username: req.session.user.username, notificationsAllowed: req.session.user.notificationsAllowed });
         }
         else {
             // Send notifications
@@ -148,7 +151,7 @@ class NotificationsService {
                     }                    
                 }
             });
-            res.render("index", { locale: req.locale, showModal: false, result: null, tasks: tasks.data, username: req.session.user.username, notificationsAllowed: req.session.user.notificationsAllowed });
+            res.render("index", { locale: req.locale, showModal: false, result: null, tasks: tasks.data, files: files.data, username: req.session.user.username, notificationsAllowed: req.session.user.notificationsAllowed });
         }
     }
 

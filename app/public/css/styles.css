@@ -87,6 +87,10 @@ small {
     color: var(--neutral-800);
 }
 
+a {
+    color: var(--primary-700);
+}
+
 
 /* --- CLASS --- */
 .white {

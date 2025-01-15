@@ -15,6 +15,10 @@
         "title": "Notifications disabled successfully",
         "message": "From now on, you won't receive any more notifications from Tisk in any of your devices"
     },
+    "FILE_UPLOADED": {
+        "title": "File uploaded successfully",
+        "message": "The file was uploaded successfully. You can check it out and download it from you file list!"
+    },
 
     "NOT_FOUND": {
         "title": "Oops! Page not found",
@@ -51,5 +55,13 @@
     "NOTIFICATIONS_DISABLED": {
         "title": "Notifications are disabled",
         "message": "Notifications are disabled in all devices. If you want to start receiving notifications from Tisk you must allow them first."
+    },
+    "FILE_TYPE_NOT_VALID": {
+        "title": "File not valid",
+        "message": "Only the following file types are allowed: PNG, JPG, PDF, DOCX, XLSX, TXT."
+    },
+    "FILE_SIZE_TOO_LARGE": {
+        "title": "File too heavy",
+        "message": "The file must be a maximum of 5MB."
     }
 }

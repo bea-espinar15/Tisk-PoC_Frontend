@@ -48,9 +48,9 @@
             <!-- Form new file -->
             <div class="div-form">
                 <h1 class="h1-form"><%= __("new_file") %></h1>
-                <form method="POST" action="/tasks">
+                <form method="POST" action="/files" enctype="multipart/form-data">
                     <label for="input-file"><%= __("file") %></label>
-                    <input id="input-file" type="file">
+                    <input id="input-file" name="uploadedFile" type="file">
                     <button type="submit" class="button-submit"><%= __("upload") %></button>
                 </form>
             </div>
@@ -58,19 +58,48 @@
             <!-- File list -->
             <h1><%= __("my_files") %></h1>
             <div id="div-files">
-                <div>
-                    <img src="/img/icons/pdf-file.png" alt="<%= __("alt_pdf_icon") %>" width="20">
-                    <a href="#">File_1.pdf</a>
-                </div>
-                <div>
-                    <img src="/img/icons/pdf-file.png" alt="<%= __("alt_pdf_icon") %>" width="20">
-                    <a href="#">File_2.pdf</a>
-                </div>
-                <div>
-                    <img src="/img/icons/pdf-file.png" alt="<%= __("alt_pdf_icon") %>" width="20">
-                    <a href="#">File_3.pdf</a>
-                </div>
-            </div>
+                <% if (files.length == 0) { %>
+                    <p class="p-no-results"><%= __("no_files") %></p>
+                <% } else { %>
+                    <% files.forEach((file) => {
+                        const match = file.match(/^(.+)_([0-9]+)\.([^.]+)$/);
+                        if (match) {
+                            const filename = match[1];
+                            const timestamp = match[2];
+                            const extension = match[3];
+                            let iconPath = __("/img/icons/other-file.png");
+                            let altImg = __("alt_other_file_icon");
+            
+                            switch (extension.toLowerCase()) {
+                                case "pdf": {
+                                    iconPath = "/img/icons/pdf-file.png";
+                                    altImg = __("alt_pdf_file_icon");
+                                } break;
+                                case "xlsx": {
+                                    iconPath = "/img/icons/excel-file.png";
+                                    altImg = __("alt_excel_file_icon");
+                                } break;
+                                case "docx": {
+                                    iconPath = "/img/icons/doc-file.png";
+                                    altImg = __("alt_doc_file_icon");
+                                } break;
+                                case "jpg":
+                                case "png": {
+                                    iconPath = "/img/icons/img-file.png";
+                                    altImg = __("alt_img_file_icon");
+                                } break;
+                                case "txt": {
+                                    iconPath = "/img/icons/txt-file.png";
+                                    altImg = __("alt_txt_file_icon");
+                                } break;
+                            }
+                    %>
+                    <div>
+                        <img src="<%= iconPath %>" alt="<%= altImg %>" width="20">
+                        <a href="/files?filename=<%= file %>"><%= filename %>.<%= extension %></a>
+                    </div>
+                <%  } }); } %>
+            </div>            
         </div>
         <hr class="hr-separator">
         <!-- --- Notifications --- -->

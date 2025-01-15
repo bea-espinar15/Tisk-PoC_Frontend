@@ -29,7 +29,6 @@ async function handleGetCall(responses, url, accessToken, queryParams = {}) {
         return new Result(true, response.status, null, response.data.content);
     }
     catch (error) {
-        console.error(error);
         // Handle error
         if (error.response) 
             if (error.response.data.code in responses)
@@ -45,15 +44,47 @@ async function handleGetCall(responses, url, accessToken, queryParams = {}) {
     }
 }
 
-// -- POST --
-async function handlePostCall(responses, url, accessToken, body) {
+async function handleGetFileCall(responses, url, accessToken, filename) {
     try {
         // Make API request
-        const response = await axios.post(`${constants.CONFIG["API_SERVICES_URL"]}${url}`, body, {
+        const response = await axios.get(`${constants.CONFIG["API_SERVICES_URL"]}${url}`, {
+            responseType: "stream",
             headers: {
-                "Content-Type": "application/json",
                 "Authorization": `Bearer ${accessToken}`
-            },
+            }
+        });
+
+        return new Result(true, response.status, null, response);
+    }
+    catch (error) {
+        // Handle error
+        if (error.response) 
+            if (error.response.data.code in responses)
+                return new Result(false, error.response.status, responses[error.response.data.code], error.response.data.content);
+            else {
+                logger.error(`[GENERAL] - API Services returned an unexpected error code: ${error.response.data.code}`);
+                return new Result(false, 500, responses.SERVER_ERROR, null);
+            }
+        else {
+            logger.error(`[GENERAL] - Error at sending request to API Services ${error}`);
+            return new Result(false, 500, responses.SERVER_ERROR, null);
+        }        
+    }
+}
+
+// -- POST --
+async function handlePostCall(responses, url, accessToken, body, isFormData = false) {
+    try {
+        let headers = {
+            "Authorization": `Bearer ${accessToken}`
+        };
+
+        if (!isFormData)
+            headers["Content-Type"] = "application/json";
+
+        // Make API request
+        const response = await axios.post(`${constants.CONFIG["API_SERVICES_URL"]}${url}`, body, {
+            headers: isFormData ? { ...headers, ...body.getHeaders() } : headers,
         });
 
         // Handle response
@@ -151,6 +182,7 @@ async function handleDeleteCall(responses, url, accessToken, queryParams = {}) {
 
 module.exports =  {
     handleGetCall,
+    handleGetFileCall,
     handlePostCall,
     handlePatchCall,
     handleDeleteCall

@@ -169,8 +169,8 @@ $(() => {
     const buttonHamburger = $("#button-hamburger");
     const divHamburger = $("#div-hamburger");
     
-    buttonHamburger.on("click", () => {
-        buttonHamburger.toggleClass("active");
+    buttonHamburger.on("click", function() {
+        $(this).toggleClass("active");
         divHamburger.toggleClass("collapsed-menu");
     });
     
