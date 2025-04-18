@@ -1,4 +1,4 @@
-# Tisk - Proof of Content
+# Tisk - Proof of Concept
 ## Frontend App + Backend Authenticator and Orchestrator
 *Last updated: 2024-11-23*
 
